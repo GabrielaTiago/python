@@ -58,6 +58,17 @@ for item in mixed:
     print(item)
 
 print('------------------')
+
 # Aceessing list items by index
 print(mixed[0])
 print(mixed[1])
+
+print('------------------')
+
+
+celulares = ['Asus', 'Samsung', 'Sony', 'IPhone']
+versoes = ['Plus', 'Premium Plus', 'Premium Deluxe', 'Plus Premium Ultra']
+
+for celular in celulares:
+    for versao in versoes:
+        print(f'{celular} - {versao}')
