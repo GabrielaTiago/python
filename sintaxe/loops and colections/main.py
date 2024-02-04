@@ -72,3 +72,24 @@ versoes = ['Plus', 'Premium Plus', 'Premium Deluxe', 'Plus Premium Ultra']
 for celular in celulares:
     for versao in versoes:
         print(f'{celular} - {versao}')
+
+print('------------------')
+
+# DESAFIOS 🥇
+# Use a operação necessária(break ou continue) para que a seguinte condição aconteça:
+
+# 1. Ao cegar ao estilo "Rap" o mesmo não deve ser impresso na tela
+rhythms = ['Hip-Hop','Rock','Rap','Pop']
+print('1: ')
+for rhythm in rhythms:
+    if rhythm == 'Rap':
+        continue
+    print(rhythm)
+
+# 2. Ao chegar ao estilo "Rock" a execução deve interrompida
+rhythms = ['Hip-Hop','Rock','Rap','Pop']
+print('2: ')
+for rhythm in rhythms:
+    if rhythm == 'Rock':
+        break
+    print(rhythm)
