@@ -1,0 +1,92 @@
+from turtle import Turtle
+
+# Constants
+STEPS_PROMPT = 'Quantos passos? '
+DEGREES_PROMPT = 'Quantos graus? '
+NEW_ATTEMPT = 'Nova tentativa: '
+NUMBERS_ONLY = 'Digite apenas números inteiros!'
+ONE_LETTER_ONLY = 'Digite apenas uma letra por vez para representar a direção!'
+WRONG_DIRECTION = '\nDireção inválida!'
+
+# Initialize the turtle
+t = Turtle()
+# Define the turtle's speed
+t.speed(2)
+
+# Functions
+def get_steps():
+    try:
+        steps = int(input(STEPS_PROMPT))
+    except ValueError:
+        print(NUMBERS_ONLY)
+        steps = int(input(STEPS_PROMPT))
+    return steps
+
+def get_degrees():
+    try:
+        degrees = int(input(DEGREES_PROMPT))
+    except ValueError:
+        print(NUMBERS_ONLY)
+        degrees = int(input(DEGREES_PROMPT))
+    return degrees
+
+# Game the instructions
+print('Bem vindo(a) ao mini game da tartaruga!\n')
+print('Instruções:')
+print('\t * Use as teclas "W" para cima e "S" para baixo para movimentar a tartaruga em X')
+print('\t * Use as teclas "A  para a esquerda e "D" para a direita para movimentar a tartaruga em Y')
+print('\t * Depois diga a quantidade de passos que a tartaruga deve \'nadar\' em X ou Y.\n')
+
+# Game loop
+while True:
+    direction_back_or_forward = input('\n["F", "T"] Você deseja ir para frente ou para trás? ').lower()
+
+    if len(direction_back_or_forward) > 1:
+        print(ONE_LETTER_ONLY)
+        direction_back_or_forward = input(NEW_ATTEMPT).lower()
+
+    if direction_back_or_forward == 'f' or direction_back_or_forward == 't':
+        if direction_back_or_forward == 'f':
+            # Move the turtle forward X pixels
+            steps = get_steps()
+            t.forward(steps)
+        elif direction_back_or_forward == 't':
+            # Move the turtle backward X pixels
+            steps = get_steps()
+            t.backward(steps)
+
+        direction_left_or_right = input('\n["D", "E"]  Você deseja ir para esquerda ou direita? ').lower()
+
+        if len(direction_left_or_right) > 1:
+            print(ONE_LETTER_ONLY)
+            direction_left_or_right = input(NEW_ATTEMPT).lower()
+
+        if direction_left_or_right == 'e' or direction_left_or_right == 'd':
+            if direction_left_or_right == 'e':
+                # Rotate the turtle to the left X degrees
+                degrees = get_degrees()
+                steps = get_steps()
+                t.left(degrees)
+                t.forward(steps)
+            elif  direction_left_or_right == 'd':
+                # Rotate the turtle to the right X degrees and move
+                degrees = get_degrees()
+                steps = get_steps()
+                t.right(degrees)
+                t.forward(steps)
+        else:
+            print(WRONG_DIRECTION)
+    else:
+        print(WRONG_DIRECTION)
+
+    keep_playing = input('\nDeseja continuar jogando? [S/N] ').lower()
+
+    if keep_playing.startswith('n'):
+        break
+    elif keep_playing.startswith('s'):
+        continue
+    else:
+        print('\bOpção inválida! Encerrando o jogo...')
+        break
+
+print('\nObrigado(a) por jogar!')
