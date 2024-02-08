@@ -8,7 +8,7 @@ def creates_full_name(name: str, lastname: str):
 user_name = input("Enter your name: ")
 user_lastname = input("Enter your lastname: ")
 result = creates_full_name(user_name, user_lastname)
-print(result + "\n")
+print(result)
 
 # 2 - Crie uma função chamada calcular_valores que recebe 2 parâmetros o primeiro o preco de um produto e o segundo parâmetro é a quantidade, porém a quantidade deve haver um valor padrão de 1. Sua função deve exibir o resultado do preço do produto, multiplicado a quantidade escolhida.
 def calculates_values(price: float, quantity: int = 1):
@@ -18,7 +18,7 @@ def calculates_values(price: float, quantity: int = 1):
 price = float(input("Enter the price of the product: "))
 quantity = int(input("Enter the quantity of the product: "))
 result = calculates_values(price, quantity)
-print(result + "\n")
+print(result)
 
 # 3 - Crie uma função chamado gerar_objeto_personalizado que irá receber 3 parâmetros, cor, altura, formato. A sua função deve apenas imprimir na tela o que foi passado para ela, nada mais, nada menos.
 #     Porém ela deve seguir as seguintes regras:
@@ -40,3 +40,19 @@ def calculate(name, *args, **kwargs):
         print(karg)
 
 calculate('John', 1, 2, 3, 4, 5, age=30, height=1.80, weight=80)
+
+# 4
+from datetime import datetime
+
+def get_schedules(func):
+    def monitor():
+        print("Date:", datetime.now())
+        func()
+        print("Date:", datetime.now())
+    return monitor
+
+@get_schedules
+def download_songs():
+    print("Running the download...")
+
+download_songs()
