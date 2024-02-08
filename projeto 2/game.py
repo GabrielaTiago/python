@@ -16,6 +16,12 @@ t.left(90)
 t.speed(4)
 
 # Functions
+def checks_the_input_size(direction: str):
+    if len(direction) > 1:
+        print(ONE_LETTER_ONLY)
+        direction = input(NEW_ATTEMPT).lower()
+    return direction
+
 def get_steps():
     try:
         steps = int(input(STEPS_PROMPT))
@@ -34,9 +40,7 @@ def get_degrees():
 
 def rotate_turtle():
     direction_left_or_right = input('\n["D", "E"]  Você deseja ir para esquerda ou direita? ').lower()
-    if len(direction_left_or_right) > 1:
-        print(ONE_LETTER_ONLY)
-        direction_left_or_right = input(NEW_ATTEMPT).lower()
+    direction_left_or_right = checks_the_input_size(direction_left_or_right)
 
     if direction_left_or_right == 'e' or direction_left_or_right == 'd':
         if direction_left_or_right == 'e':
@@ -58,10 +62,7 @@ print('\t * Depois diga a quantidade de passos que a tartaruga deve \'nadar\' em
 # Game loop
 while True:
     direction_back_or_forward = input('\n["F", "T"] Você deseja ir para frente ou para trás? ').lower()
-
-    if len(direction_back_or_forward) > 1:
-        print(ONE_LETTER_ONLY)
-        direction_back_or_forward = input(NEW_ATTEMPT).lower()
+    direction_back_or_forward = checks_the_input_size(direction_back_or_forward)
 
     if direction_back_or_forward == 'f' or direction_back_or_forward == 't':
         if direction_back_or_forward == 'f':
