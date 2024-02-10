@@ -37,3 +37,13 @@ print(new_list)
 values = [1000, 3000, 100]
 items_and_values = [[items[0],values[0]], [items[1], values[1]], [items[2], values[2]]]
 print(items_and_values)
+
+# 5 Itere sobre a lista abaixo exibindo o número do indice + nome da fruta. Porém quando o indice for 3, exiba "Nº do indice + nome da fruta EM PROMOÇÃO"
+PROMO_TEXT = ''
+fruits = ['Maçã', 'Laranja' ,'Morango', 'Pera', 'Abacaxi']
+
+for index, fruit in enumerate(fruits):
+    if index == 3:
+        PROMO_TEXT = 'EM PROMOÇÃO'
+    print(f'{index} - {fruit} {PROMO_TEXT}')
+    PROMO_TEXT = ''

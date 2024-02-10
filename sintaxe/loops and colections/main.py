@@ -131,3 +131,16 @@ prices = [1000, 3000, 100, 50, 30, 40, 300, 500]
 
 for product, price in zip_longest(products, prices):
     print(f'O preço do {product} é R$ {price}')
+
+# Enumerate
+# Enumerate returns a tuple with the index and the item
+#  enumerate(iterable, start=0)
+#   iterable - a sequence, an iterator, or objects that supports iteration
+#   start - the index value from which the counter is to be started, by default it is 0
+
+names = ['João', 'Maria', 'José', 'Ana', 'Carlos', 'Mariana', 'Pedro', 'Paula']
+
+for index, name in enumerate(names, start=1):
+    print(f'{index} - {name}')
+    if index == 3:
+       print('Temos 3 nomes na lista')
