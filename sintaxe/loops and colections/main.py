@@ -106,3 +106,28 @@ values.extend(years)
 new_list = values + years
 
 
+
+# SORT LISTS
+arr = [3, 5, 1, 9, 7, 2, 8, 4, 6]
+print(arr)
+
+# Sort the list in ascending order
+arr.sort()
+
+# Sort the list in descending order
+# arr.sort(reverse=True)
+
+# Reverse the list
+# arr.reverse()
+print(arr)
+
+print('------------------')
+
+# Loop in two lists
+from itertools import zip_longest
+
+products = ['Celular', 'Notebook', 'Carregador', 'Fone', 'Mouse', 'Teclado', 'Monitor', 'Cadeira', 'Mesa', 'Geladeira']
+prices = [1000, 3000, 100, 50, 30, 40, 300, 500]
+
+for product, price in zip_longest(products, prices):
+    print(f'O preço do {product} é R$ {price}')
