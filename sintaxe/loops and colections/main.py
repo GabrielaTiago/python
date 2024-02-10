@@ -75,21 +75,34 @@ for celular in celulares:
 
 print('------------------')
 
-# DESAFIOS 🥇
-# Use a operação necessária(break ou continue) para que a seguinte condição aconteça:
+values = [1,2,3,4,5,6,7,8,9,10]
+years = [1990,1991,1992,1993,1994,1995,1996,1997,1998,1999]
 
-# 1. Ao cegar ao estilo "Rap" o mesmo não deve ser impresso na tela
-rhythms = ['Hip-Hop','Rock','Rap','Pop']
-print('1: ')
-for rhythm in rhythms:
-    if rhythm == 'Rap':
-        continue
-    print(rhythm)
+# Add a new item to the end of the list
+values.append(100);
 
-# 2. Ao chegar ao estilo "Rock" a execução deve interrompida
-rhythms = ['Hip-Hop','Rock','Rap','Pop']
-print('2: ')
-for rhythm in rhythms:
-    if rhythm == 'Rock':
-        break
-    print(rhythm)
+# Add a new item to the list in the position x
+values.insert(3, 99)
+
+# Remove the last item from the end of the list
+values.pop()
+
+# Remove the first item from the list
+values.pop(0)
+
+# Remove a range of items from the list
+del values[0:3]
+
+# Remove the first item with the value 5
+values.remove(5)
+
+# Remove all items from the list
+values.clear()
+
+# Join two lists
+values.extend(years)
+
+# Create a new list with the join of two lists
+new_list = values + years
+
+
