@@ -55,3 +55,13 @@ print(len(sites))
 
 # Adding items to a tuple
 # sites.append('yahoo.com') # This will raise an error
+
+# Sorting
+from operator import itemgetter
+
+users = [('John', 30), ('Jane', 25), ('Paul', 40), ('Alice', 35)]
+users.sort(key=itemgetter(1))
+print(users)
+
+users.sort(key=itemgetter(1), reverse=True) # Sort in descending order
+print(users)

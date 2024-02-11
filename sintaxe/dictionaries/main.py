@@ -34,3 +34,14 @@ print(items)
 # Looping through a dictionary
 for item in items:
     print(item[0], item[1])
+
+# Sorting by a dictionary key
+from operator import itemgetter
+
+products_list =[{'id':5, 'product': 'Notebook', 'price': 3000}, {'id':3, 'product': 'Smartphone', 'price': 1500}, {'id':1, 'product': 'Headphone', 'price': 100}, {'id':2, 'product': 'Mouse', 'price': 50}, {'id':4, 'product': 'Keyboard', 'price': 40}]
+
+products_list.sort(key=itemgetter('product'))
+print(products_list)
+
+products_list.sort(key=itemgetter('price'), reverse=True)
+print(products_list)
