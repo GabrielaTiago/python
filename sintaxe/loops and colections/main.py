@@ -132,6 +132,8 @@ prices = [1000, 3000, 100, 50, 30, 40, 300, 500]
 for product, price in zip_longest(products, prices):
     print(f'O preço do {product} é R$ {price}')
 
+print('------------------')
+
 # Enumerate
 # Enumerate returns a tuple with the index and the item
 #  enumerate(iterable, start=0)
@@ -144,3 +146,17 @@ for index, name in enumerate(names, start=1):
     print(f'{index} - {name}')
     if index == 3:
        print('Temos 3 nomes na lista')
+
+print('------------------')
+
+# Map
+# Map applies a function to all the items in an input_list
+#  map(function_to_apply, list_of_inputs)
+
+def square(number):
+    return number * number
+
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+squared = list(map(square, numbers))
+print(squared)
