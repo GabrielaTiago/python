@@ -28,3 +28,26 @@ with open('sintaxe/json/users/usuarios5.json', encoding='utf-8') as file:
     data = json.load(file)
     print(data)
     print(data[1]['telefone'])
+
+# Creating a json file
+user_data = '''{
+    "nome": "João",
+    "idade": 25,
+    "email": "jao@email.com"
+}'''
+
+# Readind a string
+data = json.loads(user_data)
+print(data)
+
+# Writing a json file
+with open('sintaxe/json/users/user.json', 'w', encoding='utf-8') as file:
+    json.dump(data, file, indent=4)
+
+# Reading a json file
+with open('sintaxe/json/users/user.json', encoding='utf-8') as file:
+    data = json.load(file)
+    print(data)
+    print(data['nome'])
+    print(data['idade'])
+    print(data['email'])
