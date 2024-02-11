@@ -172,3 +172,71 @@ numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 list_even = list(filter(is_even, numbers))
 print(list_even)
+
+# Set
+# A set is a collection which is unordered and unindexed. In Python sets are written with curly brackets.
+# Sets are unordered, so the items will appear in a random order.
+# Does not allow duplicate items
+
+# Creating a set
+s_numbers = [1, 2, 3, 4, 5, 6, 7, 2, 8, 9, 10]
+print(s_numbers)
+
+fruits = {'apple', 'banana', 'cherry', 'banana', 'orange', 'kiwi', 'melon', 'mango', 'grape', 'apple'} # Duplicate items will be removed from the set
+print(fruits)
+
+set_numbers = set(s_numbers)
+print(set_numbers)
+
+set_fruits = set(list(fruits))
+print(set_fruits)
+
+# Adding items to a set
+set_numbers.add(11)
+print(set_numbers)
+
+# Removing an item from a set
+set_numbers.remove(11)
+print(set_numbers)
+
+# Removing an item from a set using discard
+set_numbers.discard(10)
+print(set_numbers)
+
+# Removing the first item from a set
+set_numbers.pop()
+print(set_numbers)
+
+# Clearing a set
+set_numbers.clear()
+print(set_numbers)
+
+# Deleting a set
+del set_numbers
+
+# Joining sets
+set1 = {'a', 'b', 'c'}
+set2 = {1, 2, 3}
+
+# Joining two sets
+s1 = set1.union(set2)
+print(s1)
+
+# Joining two sets using update
+set1.update(set2)
+print(set1)
+
+numbers1 = [2,5,6,2,8]
+mumbers2 = [2,3,4,5,6,7,5,8,9,10]
+
+n1 = set(numbers1)
+n2 = set(mumbers2)
+
+# Symmetric difference (items that are not in both sets)
+print(n1.symmetric_difference(n2))
+
+# Intersection (common items)
+print(n1.intersection(n2))
+
+# Union (all items)
+print(n1.union(n2))
