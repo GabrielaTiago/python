@@ -47,3 +47,19 @@ for index, fruit in enumerate(fruits):
         PROMO_TEXT = 'EM PROMOÇÃO'
     print(f'{index} - {fruit} {PROMO_TEXT}')
     PROMO_TEXT = ''
+
+# 6 Usando a lista abaixo, filtre apenas as vagas com salário acima de R$2500
+
+DESIRED_SALARY = 2500
+
+jobs = [
+    ['vaga 1', 1200],
+    ['vaga 2', 2550],
+    ['vaga 3', 5000]
+]
+
+def min_salary(job):
+    return job[1] > DESIRED_SALARY
+
+filtered_jobs = list(filter(min_salary, jobs))
+print(filtered_jobs)
