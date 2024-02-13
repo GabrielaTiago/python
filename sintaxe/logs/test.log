@@ -1,0 +1,5 @@
+2024-02-12 21:11:45,643 - root - DEBUG - debug message
+2024-02-12 21:11:45,643 - root - INFO - info message
+2024-02-12 21:11:45,643 - root - WARNING - warn message
+2024-02-12 21:11:45,643 - root - ERROR - error message
+2024-02-12 21:11:45,643 - root - CRITICAL - critical message
