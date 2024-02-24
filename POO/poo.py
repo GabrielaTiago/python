@@ -56,3 +56,11 @@ print(car.top_speed)
 car.turn_on()
 car.turn_off()
 car.info()
+
+# creating an object using class method
+car2 = Car.super_car('Lamborghini', 'Aventador')
+print(car2.color)
+print(car2.brand)
+print(car2.model)
+print(car2.top_speed)
+car2.info()
