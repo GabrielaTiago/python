@@ -57,6 +57,8 @@ car.turn_on()
 car.turn_off()
 car.info()
 
+print('-------------------')
+
 # creating an object using class method
 car2 = Car.super_car('Lamborghini', 'Aventador')
 print(car2.color)
@@ -64,3 +66,32 @@ print(car2.brand)
 print(car2.model)
 print(car2.top_speed)
 car2.info()
+
+print('-------------------')
+
+# Inheritance
+# Inheritance allows us to define a class that inherits all the methods and properties from another class.
+# Parent class is the class being inherited from, also called base class.
+# Child class is the class that inherits from another class, also called derived class.
+
+class ElectricCar(Car):
+    def __init__(self, color, brand, model, top_speed, battery) -> None:
+        super().__init__(color, brand, model, top_speed) # calling the parent class constructor
+        self.battery = battery
+
+    def info(self):
+        super().info() # calling the parent method
+        print(f'Battery: {self.battery}')
+
+    def turn_on(self):
+        print('The electric car is on')
+
+    def turn_off(self):
+        print('The electric car is off')
+
+    def charge(self):
+        print('The car is charging')
+
+electric_car = ElectricCar('Blue', 'Tesla', 'Model S', 250, '100kWh')
+electric_car.info()
+electric_car.turn_on()
