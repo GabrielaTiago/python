@@ -186,3 +186,35 @@ book = Book('Clean Code', 'Robert C. Martin', 464)
 print(book) # Clean Code by Robert C. Martin
 print(len(book)) # 464
 del book # A book object has been deleted
+
+# Abstract classes
+
+# Abstract classes are classes that contain one or more abstract methods.
+# An abstract method is a method that is declared, but contains no implementation.
+# Abstract classes may not be instantiated, and its abstract methods must be implemented by its subclasses.
+# Abstract classes are used to define a blueprint for other classes.
+
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
+    @abstractmethod
+    def move(self):
+        pass
+
+class Dog(Animal):
+    # pass # TypeError: Can't instantiate abstract class Dog with abstract methods move
+
+    # implementing the abstract method of the parent class
+    def move(self):
+        print('The dog is walking')
+
+class Bird(Animal):
+    def move(self):
+        print('The bird is flying')
+
+# animal = Animal() # TypeError: Can't instantiate abstract class Animal with abstract methods move
+dog = Dog()
+dog.move() # The dog is walking
+bird = Bird()
+bird.move() # The bird is flying
+
