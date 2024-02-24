@@ -187,6 +187,8 @@ print(book) # Clean Code by Robert C. Martin
 print(len(book)) # 464
 del book # A book object has been deleted
 
+print('-------------------')
+
 # Abstract classes
 
 # Abstract classes are classes that contain one or more abstract methods.
@@ -217,4 +219,31 @@ dog = Dog()
 dog.move() # The dog is walking
 bird = Bird()
 bird.move() # The bird is flying
+
+print('-------------------')
+
+# Encapsulation
+
+# Encapsulation is an another important concept in OOP.
+# It is used to restrict access to methods and variables.
+# This can prevent the data from being modified by accident and is known as encapsulation.
+# In Python, we can restrict access to methods and variables using private access modifier.
+# We denote private attributes using underscore as the prefix, i.e single _ or double __.
+
+class Computer:
+    def __init__(self) -> None:
+        self.__max_price = 900
+
+    def sell(self):
+        print(f'Selling price: {self.__max_price}')
+
+    def set_max_price(self, price):
+        self.__max_price = price
+
+computer = Computer()
+computer.sell() # Selling price: 900
+computer.__max_price = 1000 # it is not possible to change the value of the private attribute
+computer.sell() # Selling price: 900
+computer.set_max_price(1000) # it is possible to change the value of the private attribute using a method
+computer.sell() # Selling price: 1000
 
