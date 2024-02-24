@@ -224,7 +224,6 @@ print('-------------------')
 
 # Encapsulation
 
-# Encapsulation is an another important concept in OOP.
 # It is used to restrict access to methods and variables.
 # This can prevent the data from being modified by accident and is known as encapsulation.
 # In Python, we can restrict access to methods and variables using private access modifier.
@@ -247,3 +246,30 @@ computer.sell() # Selling price: 900
 computer.set_max_price(1000) # it is possible to change the value of the private attribute using a method
 computer.sell() # Selling price: 1000
 
+print('-------------------')
+
+# Polymorphism
+
+# It allows objects to be treated as instances of their parent class.
+# It allows methods to be called on different objects without knowing the specific object beforehand.
+# The word polymorphism means having many forms.
+# In Python, polymorphism allows us to define methods in the child class with the same name as defined in their parent class.
+
+class Parrot:
+    def fly(self):
+        print('Parrot can fly')
+
+class Penguin:
+    def fly(self):
+        print('Penguin can not fly')
+
+# method polymorphism
+def flying_test(bird):
+    bird.fly()
+
+parrot = Parrot()
+penguin = Penguin()
+flying_test(parrot) # Parrot can fly
+flying_test(penguin) # Penguin can not fly
+
+print('-------------------')
