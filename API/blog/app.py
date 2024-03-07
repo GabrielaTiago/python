@@ -7,6 +7,7 @@ app = Flask(__name__)
 config = Config(app)
 db = SqliteDB(app)
 
+
 class Post(db.db.Model):
     __tablename__ = 'post'
     id = db.db.Column(db.db.Integer, primary_key=True)
