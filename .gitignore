@@ -16,6 +16,7 @@ build/
 venv/
 env/
 .env/
+.env*
 
 # IDEs and editors
 .idea/
