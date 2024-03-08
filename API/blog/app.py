@@ -1,27 +1,20 @@
 from flask import Flask, request, jsonify
 from config import Config
 from databases import SqliteDB
+from models import Author, Post
+
 
 app = Flask(__name__)
 
-config = Config(app)
-db = SqliteDB(app)
+Config(app)
 
+with app.app_context():
+    sqlite = SqliteDB(app)
 
-class Post(db.db.Model):
-    __tablename__ = 'post'
-    id = db.db.Column(db.db.Integer, primary_key=True)
-    title = db.db.Column(db.db.String(100))
-    content = db.db.Column(db.db.String(1000))
+    author_1 = Author('jhon', 'jhon@example.com', 'password1', True)
+    author_2 = Author('will', 'will@example.com', 'password2', False)
 
-    def __init__(self, title, content):
-        self.title = title
-        self.content = content
+    sqlite.add(author_1)
 
-class Author(db.db.Model):
-    __tablename__ = 'author'
-    id = db.db.Column(db.db.Integer, primary_key=True)
-    name = db.db.Column(db.db.String(100))
-
-    def __init__(self, name):
-        self.name = name
+    post_1 = Post('First Post', 'Content of the first post')
+    post_2 = Post('Second Post', 'Content of the second post')

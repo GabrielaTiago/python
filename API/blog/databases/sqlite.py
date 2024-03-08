@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 class SqliteDB:
     def __init__(self, app):
         self.db = SQLAlchemy(app)
+        self.db.drop_all()
         self.db.create_all()
         self.db.session.commit()
         self.db.session.close()
