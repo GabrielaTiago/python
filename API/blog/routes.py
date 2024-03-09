@@ -60,10 +60,7 @@ def get_authors(user):
         return jsonify({'message': BAD_REQUEST_MESSAGE}), 400
     if len(authors) == 0:
         return jsonify({'message': AUTORS_NOT_FOUND_MESSAGE}), 404
-    list_authors = []
-    for author in authors:
-        __author = mount_author(author)
-        list_authors.append(__author)
+    list_authors = [mount_author(author) for author in authors]
     return jsonify({'authors': list_authors, 'total': len(list_authors)})
 
 @app.route('/author/<int:id>', methods=['GET'])
