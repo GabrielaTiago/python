@@ -1,6 +1,26 @@
-from flask import request, jsonify
+from flask import request, jsonify, make_response
 from app import app, sqlite, Author, Post
 from default_messages import  AUTORS_NOT_FOUND_MESSAGE, AUTHOR_NOT_FOUND_MESSAGE, AUTHOR_CREATED_MESSAGE, AUTHOR_UPDATED_MESSAGE, AUTHOR_DELETED_MESSAGE, POSTS_NOT_FOUND_MESSAGE, POST_NOT_FOUND_MESSAGE, POST_CREATED_MESSAGE, POST_UPDATED_MESSAGE, POST_DELETED_MESSAGE
+from datetime import datetime, timedelta
+import jwt
+
+@app.route('/login')
+def login():
+    auth = request.authorization
+
+    if not auth or not auth.username or not auth.password:
+        return make_response('Could not verify user credentials', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+
+    author = sqlite.get(Author, auth.username)
+
+    if not author:
+        return make_response('Could not verify user credentials', 401, {'WWW-Authenticate': 'Basic realm="Login required!"'})
+
+    if author.password == auth.password:
+        token = jwt.encode({'public_id': author.id, 'exp': datetime.utcnow() + timedelta(minutes=30)}, app.config['SECRET_KEY'])
+        return jsonify({'message': 'Login successful!', 'token': token})
+    else:
+        return make_response('Your e-mail or password is incorrect', 401, {'WWW-Authenticate': 'Basic realm="Wrong credentials!"'})
 
 def mount_author(author):
     return {
