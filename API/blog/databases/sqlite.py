@@ -5,7 +5,6 @@ class SqliteDB:
         self.db = SQLAlchemy(app)
 
     def create_all(self):
-        self.db.drop_all()
         self.db.create_all()
         self.db.session.commit()
 
@@ -18,7 +17,7 @@ class SqliteDB:
     def add(self, model):
         self.db.session.add(model)
         self.db.session.commit()
-        # self.db.session.close()
+        self.db.session.close()
 
     def update(self):
         self.db.session.commit()
