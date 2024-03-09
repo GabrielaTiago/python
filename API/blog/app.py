@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 from config import Config
 from databases import SqliteDB
 
@@ -36,17 +36,10 @@ class Post(db.Model):
         self.content = content
         self.author_id = author_id
 
-with app.app_context():
-    sqlite.create_all()
-    author_1 = Author('jhon', 'jhon@example.com', 'password1', True)
-    author_2 = Author('will', 'will@example.com', 'password2', False)
+def init_database():
+    with app.app_context():
+        sqlite.create_all()
 
-    sqlite.add(author_1)
-    sqlite.add(author_2)
-
-    post_1 = Post('First Post', 'Content of the first post', 1)
-    post_2 = Post('Second Post', 'Content of the second post', 2)
-
-    sqlite.add(post_1)
-    sqlite.add(post_2)
-
+if __name__ == "__main__":
+    print('Creating database...')
+    init_database()
