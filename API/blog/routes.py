@@ -2,7 +2,24 @@ from flask import request, jsonify, make_response
 from app import app, sqlite, Author, Post
 from default_messages import  AUTORS_NOT_FOUND_MESSAGE, AUTHOR_NOT_FOUND_MESSAGE, AUTHOR_CREATED_MESSAGE, AUTHOR_UPDATED_MESSAGE, AUTHOR_DELETED_MESSAGE, POSTS_NOT_FOUND_MESSAGE, POST_NOT_FOUND_MESSAGE, POST_CREATED_MESSAGE, POST_UPDATED_MESSAGE, POST_DELETED_MESSAGE
 from datetime import datetime, timedelta
+from functools import wraps
 import jwt
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+        if not token:
+            return jsonify({'message': 'Token is missing!'}), 401
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+            user = sqlite.get(Author, data['public_id'])
+        except jwt.DecodeError:
+            return jsonify({'message': 'Token is invalid!'}), 401
+        return f(user, *args, **kwargs)
+    return decorated
 
 @app.route('/login')
 def login():
@@ -34,7 +51,8 @@ def mount_author(author):
 # Author routes
 
 @app.route('/authors', methods=['GET'])
-def get_authors():
+@token_required
+def get_authors(user):
     authors = sqlite.get_all(Author)
 
     if len(authors) == 0:
@@ -49,7 +67,8 @@ def get_authors():
 
 
 @app.route('/author/<int:id>', methods=['GET'])
-def get_author(id):
+@token_required
+def get_author(user, id):
     author = sqlite.get(Author, id)
 
     if not author:
@@ -59,7 +78,8 @@ def get_author(id):
     return jsonify(__author)
 
 @app.route('/author', methods=['POST'])
-def add_author():
+@token_required
+def add_author(user):
     data = request.get_json()
 
     if not data['name'] or not data['email'] or not data['password'] or not data['admin']:
@@ -70,7 +90,8 @@ def add_author():
     return jsonify({'message': AUTHOR_CREATED_MESSAGE }), 201
 
 @app.route('/author/<int:id>', methods=['PUT'])
-def update_author(id):
+@token_required
+def update_author(user, id):
     author = sqlite.get(Author, id)
 
     if not author:
@@ -85,7 +106,8 @@ def update_author(id):
     return jsonify({'message': AUTHOR_UPDATED_MESSAGE})
 
 @app.route('/author/<int:id>', methods=['DELETE'])
-def delete_author(id):
+@token_required
+def delete_author(user, id):
     author = sqlite.get(Author, id)
 
     if not author:
@@ -105,7 +127,8 @@ def mount_post(post):
 # Post routes
 
 @app.route('/posts', methods=['GET'])
-def get_posts():
+@token_required
+def get_posts(user):
     posts = sqlite.get_all(Post)
 
     if len(posts) == 0:
@@ -115,7 +138,8 @@ def get_posts():
     return jsonify({'posts': list_posts, 'total': len(list_posts)})
 
 @app.route('/post/<int:id>', methods=['GET'])
-def get_post(id):
+@token_required
+def get_post(user, id):
     post = sqlite.get(Post, id)
 
     if post is None:
@@ -124,7 +148,8 @@ def get_post(id):
     return jsonify(mount_post(post))
 
 @app.route('/post', methods=['POST'])
-def add_post():
+@token_required
+def add_post(user):
     data = request.get_json()
 
     if not data['title'] or not data['content'] or not data['author_id']:
@@ -135,7 +160,8 @@ def add_post():
     return jsonify({'message': POST_CREATED_MESSAGE}), 201
 
 @app.route('/post/<int:id>', methods=['PUT'])
-def update_post(id):
+@token_required
+def update_post(user, id):
     post = sqlite.get(Post, id)
 
     if not post:
@@ -150,7 +176,8 @@ def update_post(id):
     return jsonify({'message': POST_UPDATED_MESSAGE})
 
 @app.route('/post/<int:id>', methods=['DELETE'])
-def delete_post(id):
+@token_required
+def delete_post(user, id):
     post = sqlite.get(Post, id)
 
     if not post:
