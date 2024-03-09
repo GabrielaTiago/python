@@ -1,3 +1,5 @@
+BAD_REQUEST_MESSAGE = 'Bad request'
+
 AUTORS_NOT_FOUND_MESSAGE = 'Authors not found'
 AUTHOR_NOT_FOUND_MESSAGE = 'Author not found'
 AUTHOR_CREATED_MESSAGE = 'Author successfully created!'

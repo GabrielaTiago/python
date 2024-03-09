@@ -1,6 +1,6 @@
 from flask import request, jsonify, make_response
 from app import app, sqlite, Author, Post
-from default_messages import  AUTORS_NOT_FOUND_MESSAGE, AUTHOR_NOT_FOUND_MESSAGE, AUTHOR_CREATED_MESSAGE, AUTHOR_UPDATED_MESSAGE, AUTHOR_DELETED_MESSAGE, POSTS_NOT_FOUND_MESSAGE, POST_NOT_FOUND_MESSAGE, POST_CREATED_MESSAGE, POST_UPDATED_MESSAGE, POST_DELETED_MESSAGE
+from default_messages import BAD_REQUEST_MESSAGE, AUTORS_NOT_FOUND_MESSAGE, AUTHOR_NOT_FOUND_MESSAGE, AUTHOR_CREATED_MESSAGE, AUTHOR_UPDATED_MESSAGE, AUTHOR_DELETED_MESSAGE, POSTS_NOT_FOUND_MESSAGE, POST_NOT_FOUND_MESSAGE, POST_CREATED_MESSAGE, POST_UPDATED_MESSAGE, POST_DELETED_MESSAGE
 from datetime import datetime, timedelta
 from functools import wraps
 import jwt
@@ -53,67 +53,76 @@ def mount_author(author):
 @app.route('/authors', methods=['GET'])
 @token_required
 def get_authors(user):
-    authors = sqlite.get_all(Author)
-
+    try:
+        authors = sqlite.get_all(Author)
+    except Exception as e:
+        print(e)
+        return jsonify({'message': BAD_REQUEST_MESSAGE}), 400
     if len(authors) == 0:
         return jsonify({'message': AUTORS_NOT_FOUND_MESSAGE}), 404
-
     list_authors = []
     for author in authors:
         __author = mount_author(author)
         list_authors.append(__author)
-
     return jsonify({'authors': list_authors, 'total': len(list_authors)})
-
 
 @app.route('/author/<int:id>', methods=['GET'])
 @token_required
 def get_author(user, id):
-    author = sqlite.get(Author, id)
-
-    if not author:
-        return jsonify({'message': AUTHOR_NOT_FOUND_MESSAGE}), 404
-
-    __author = mount_author(author)
+    try:
+        author = sqlite.get(Author, id)
+        if not author:
+            return jsonify({'message': AUTHOR_NOT_FOUND_MESSAGE}), 404
+        __author = mount_author(author)
+    except Exception as e:
+        print(e)
+        return jsonify({'message': BAD_REQUEST_MESSAGE}), 400
     return jsonify(__author)
 
 @app.route('/author', methods=['POST'])
 @token_required
 def add_author(user):
     data = request.get_json()
-
     if not data['name'] or not data['email'] or not data['password'] or not data['admin']:
         return jsonify({'message': 'All fields are required'}), 406
-
     author = Author(data['name'], data['email'], data['password'], data['admin'])
-    sqlite.add(author)
+    try:
+        sqlite.add(author)
+    except Exception as e:
+        print(e)
+        return jsonify({'message': BAD_REQUEST_MESSAGE}), 400
     return jsonify({'message': AUTHOR_CREATED_MESSAGE }), 201
 
 @app.route('/author/<int:id>', methods=['PUT'])
 @token_required
 def update_author(user, id):
-    author = sqlite.get(Author, id)
-
-    if not author:
-        return jsonify({'message': AUTHOR_NOT_FOUND_MESSAGE}), 404
-
-    data = request.get_json()
-    author.name = data['name']
-    author.email = data['email']
-    author.password = data['password']
-    author.admin = data['admin']
-    sqlite.update()
+    try:
+        author = sqlite.get(Author, id)
+        if not author:
+            return jsonify({'message': AUTHOR_NOT_FOUND_MESSAGE}), 404
+        data = request.get_json()
+        author.name = data['name']
+        author.email = data['email']
+        author.password = data['password']
+        author.admin = data['admin']
+        sqlite.update()
+    except Exception as e:
+        print(e)
+        return jsonify({'message': BAD_REQUEST_MESSAGE}), 400
     return jsonify({'message': AUTHOR_UPDATED_MESSAGE})
 
 @app.route('/author/<int:id>', methods=['DELETE'])
 @token_required
 def delete_author(user, id):
-    author = sqlite.get(Author, id)
+    try:
+        author = sqlite.get(Author, id)
+        if not author:
+            return jsonify({'message': AUTHOR_NOT_FOUND_MESSAGE}), 404
+        sqlite.delete(author)
+    except Exception as e:
+        print(e)
+        return jsonify({'message': BAD_REQUEST_MESSAGE}), 400
 
-    if not author:
-        return jsonify({'message': AUTHOR_NOT_FOUND_MESSAGE}), 404
-
-    sqlite.delete(author)
     return jsonify({'message': AUTHOR_DELETED_MESSAGE})
 
 def mount_post(post):
@@ -129,61 +138,70 @@ def mount_post(post):
 @app.route('/posts', methods=['GET'])
 @token_required
 def get_posts(user):
-    posts = sqlite.get_all(Post)
-
+    try:
+        posts = sqlite.get_all(Post)
+    except Exception as e:
+        print(e)
+        return jsonify({'message': BAD_REQUEST_MESSAGE}), 400
     if len(posts) == 0:
         return jsonify({'message': POSTS_NOT_FOUND_MESSAGE}), 404
-
     list_posts = [mount_post(post) for post in posts]
     return jsonify({'posts': list_posts, 'total': len(list_posts)})
 
 @app.route('/post/<int:id>', methods=['GET'])
 @token_required
 def get_post(user, id):
-    post = sqlite.get(Post, id)
-
-    if post is None:
-        return jsonify({'message': POST_NOT_FOUND_MESSAGE}), 404
-
+    try:
+        post = sqlite.get(Post, id)
+        if post is None:
+            return jsonify({'message': POST_NOT_FOUND_MESSAGE}), 404
+    except Exception as e:
+        print(e)
+        return jsonify({'message': BAD_REQUEST_MESSAGE}), 400
     return jsonify(mount_post(post))
 
 @app.route('/post', methods=['POST'])
 @token_required
 def add_post(user):
     data = request.get_json()
-
     if not data['title'] or not data['content'] or not data['author_id']:
         return jsonify({'message': 'All fields are required'}), 406
-
     post = Post(data['title'], data['content'], data['author_id'])
-    sqlite.add(post)
+    try:
+        sqlite.add(post)
+    except Exception as e:
+        print(e)
+        return jsonify({'message': BAD_REQUEST_MESSAGE}), 400
     return jsonify({'message': POST_CREATED_MESSAGE}), 201
 
 @app.route('/post/<int:id>', methods=['PUT'])
 @token_required
 def update_post(user, id):
-    post = sqlite.get(Post, id)
-
-    if not post:
-        return jsonify({'message': POST_NOT_FOUND_MESSAGE}), 404
-
-    data = request.get_json()
-
-    post.title = data['title']
-    post.content = data['content']
-    post.author_id = data['author_id']
-    sqlite.update()
+    try:
+        post = sqlite.get(Post, id)
+        if not post:
+            return jsonify({'message': POST_NOT_FOUND_MESSAGE}), 404
+        data = request.get_json()
+        post.title = data['title']
+        post.content = data['content']
+        post.author_id = data['author_id']
+        sqlite.update()
+    except Exception as e:
+        print(e)
+        return jsonify({'message': BAD_REQUEST_MESSAGE}), 400
     return jsonify({'message': POST_UPDATED_MESSAGE})
 
 @app.route('/post/<int:id>', methods=['DELETE'])
 @token_required
 def delete_post(user, id):
-    post = sqlite.get(Post, id)
-
-    if not post:
-        return jsonify({'message': POST_NOT_FOUND_MESSAGE}), 404
-
-    sqlite.delete(post)
+    try:
+        post = sqlite.get(Post, id)
+        if not post:
+            return jsonify({'message': POST_NOT_FOUND_MESSAGE}), 404
+        sqlite.delete(post)
+    except Exception as e:
+        print(e)
+        return jsonify({'message': BAD_REQUEST_MESSAGE}), 400
     return jsonify({'message': POST_DELETED_MESSAGE})
 
 
