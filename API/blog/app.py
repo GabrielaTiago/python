@@ -4,6 +4,7 @@ from databases import SqliteDB
 
 app = Flask(__name__)
 
+print('Configuring app...')
 Config(app)
 
 sqlite = SqliteDB(app)
@@ -39,6 +40,13 @@ class Post(db.Model):
 def init_database():
     with app.app_context():
         sqlite.create_all()
+        admin = Author(
+            app.config['ADMIN_NAME'],
+            app.config['ADMIN_EMAIL'],
+            app.config['ADMIN_PASSWORD'],
+            app.config['ADMIN']
+        )
+        sqlite.add(admin)
 
 if __name__ == "__main__":
     print('Creating database...')
