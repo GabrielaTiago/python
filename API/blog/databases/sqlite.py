@@ -3,10 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 class SqliteDB:
     def __init__(self, app):
         self.db = SQLAlchemy(app)
+
+    def create_all(self):
         self.db.drop_all()
         self.db.create_all()
         self.db.session.commit()
-        self.db.session.close()
 
     def get_all(self, model):
         return model.query.all()
@@ -17,7 +18,7 @@ class SqliteDB:
     def add(self, model):
         self.db.session.add(model)
         self.db.session.commit()
-        self.db.session.close()
+        # self.db.session.close()
 
     def update(self):
         self.db.session.commit()
