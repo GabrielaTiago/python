@@ -45,3 +45,12 @@ print(products_list)
 
 products_list.sort(key=itemgetter('price'), reverse=True)
 print(products_list)
+
+print('------------------')
+
+# Dictionary comprehension
+# Dictionary comprehension is an elegant and concise way to create dictionaries
+# {key: expression for item in iterable}
+
+from pprint import pprint
+pprint({product['product']: [i*3 for i in range(5)] for product in products_list})
