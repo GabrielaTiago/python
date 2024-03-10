@@ -240,3 +240,12 @@ print(n1.intersection(n2))
 
 # Union (all items)
 print(n1.union(n2))
+
+print('------------------')
+
+# list comprehension
+# List comprehension is an elegant way to define and create lists based on existing lists.
+# [expression for item in iterable if condition == True]
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+squared_numbers = [num * num for num in numbers]
+print(squared_numbers)

@@ -63,3 +63,26 @@ def min_salary(job):
 
 filtered_jobs = list(filter(min_salary, jobs))
 print(filtered_jobs)
+
+# Desafios 🥇
+
+# 1: Usando list compreheension, crie a seguinte lista: [2,4,6,8,10]
+list_1 = [i*2 for i in range(1,6)]
+print(list_1)
+
+# 2: Use a lista comprheension usando a seguinte lista como base 'cores' para criar a lista seguir
+# ['cor - vermelho','cor - azul','cor - verde','cor - amarelo','cor - rosa','cor - preto']
+cores = ['vermelho','azul','verde','amarelo','rosa','preto']
+list_2 = ['cor - ' + cor for cor in cores]
+print(list_2)
+
+# 3: Usando as listas a seguir como base, concatene(adicione) a palavra ' PAGO' aos nomes da lista 'participantes' usando condicionais,
+# somente nos caso onde seu nome esteja na lista 'pagamento_realizado', ou ' DEVENDO' em caso contrário.
+# O resultado final deve ser como a lista a seguir:
+# ['joel PAGO', 'jessica PAGO', 'maria PAGO', 'cris PAGO', 'Larissa DEVENDO', 'rafael DEVENDO', 'marcus DEVENDO', 'john DEVENDO']
+
+participantes = ['joel','jessica', 'maria','cris','Larissa', 'rafael', 'marcus', 'john']
+pagamento_realizado = ['joel','jessica', 'maria','cris']
+
+list_3 = [participante + ' PAGO' if participante in pagamento_realizado else participante + ' DEVENDO' for participante in participantes]
+print(list_3)
